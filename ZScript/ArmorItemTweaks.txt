@@ -1,0 +1,35 @@
+Class BeerBottleArmor : FistsBeer replaces ArmorBonus
+{
+	default
+	{
+		Weapon.AmmoGive 5;
+		Scale 0.2;
+	}
+	
+	states 
+	{
+		spawn :
+			BEER A -1;
+			stop;
+	}
+}
+
+Class BeerBottleThree : FistsBeer replaces Stimpack
+{
+	states 
+	{
+		spawn :
+			BEER B -1;
+			stop;
+	}
+}
+
+Class BeerBottleSixPack : FistsBeer replaces Medikit
+{
+	states 
+	{
+		spawn :
+			BEER C -1;
+			stop;
+	}
+}

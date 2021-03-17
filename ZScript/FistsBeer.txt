@@ -1,0 +1,181 @@
+Class FistsBeer : Fist {
+	
+	Default {
+		Weapon.SlotNumber 1;
+		Weapon.KickBack 100;
+		Weapon.AmmoType "BottlesOfBeer";
+		Weapon.AmmoType2 "SwigsOfAlcohol";
+	}
+	
+	states {
+	
+		Select:
+			PUBR A 1 FAST {
+				A_Print("Beer");
+				A_Raise();
+				A_Overlay(2, "Select.Overlay");
+			}
+			Loop;
+			
+		Deselect:
+			PUBR A 1 {
+				A_Lower();
+				A_Overlay(2, "Deselect.Overlay");
+			}
+			Loop;
+	
+		Ready:
+			PUBR A 1 {
+				A_WeaponReady();
+				A_Overlay(2, "Ready.Overlay");
+			}
+			Loop;
+	
+		Fire :
+			TNT1 A 0 A_Jump(128, "Fire.RightJab");
+		Fire.LeftJab :
+			PUBR A 1 {
+				A_AlertMonsters();
+				A_Overlay(2, "Fire.LeftJab.Overlay");
+			}
+			PUBR BC 1;
+			PUBR D 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/LPUNCH", "skeleton/swing");
+			PUBR E 1;
+			PUBR F 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/LPUNCH");
+			PUBR G 1;
+			PUBR H 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/LPUNCH");
+			PUBR IJKLMNO 1;
+			PUBR P 1 A_ReFire();
+			goto Ready;
+			
+		Fire.RightJab :
+			PUBR Q 1 {
+				A_AlertMonsters();
+				A_Overlay(2, "Fire.RightJab.Overlay");
+			}
+			PUBR RS 1;
+			PUBR T 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/RPUNCHBO", "skeleton/swing");
+			PUBR U 1;
+			PUBR V 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/RPUNCHBO");
+			PUBR W 1;
+			PUBR X 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/RPUNCHBO");
+			PUBR XWVUTSR 1;
+			PUBR Q 1 A_ReFire();
+			goto Ready;
+			
+		AltFire :
+			TNT1 A 0 A_JumpIfInventory("SwigsOfAlcohol", 1, "AltFire.Drink");
+			TNT1 A 0 A_JumpIfInventory("BottlesOfBeer", 1, "AltFire.ChuckBottle");
+			goto Ready;
+			
+		AltFire.Check :
+			TNT1 A 0 A_JumpIfInventory("SwigsOfAlcohol", 1, "AltFire.DrinkLoop");
+			TNT1 A 0 A_JumpIfInventory("BottlesOfBeer", 1, "AltFire.ChuckBottle");
+			goto Ready;
+			
+		AltFire.ChuckBottle :
+		
+			TNT1 A 0 A_Overlay(2, "AltFire.ChuckBottle.Overlay");
+			PTHR ABCDEF 2;
+			TNT1 A 1 A_FireProjectile("BottleProjectile", 0, false);
+			TNT1 A 7;
+			TNT1 A 0 A_JumpIfInventory("BottlesOfBeer", 1, "AltFire.GiveBeer");
+			TNT1 A 0 A_Refire("AltFire");
+			goto ready;
+			
+		AltFire.GiveBeer :
+		
+			TNT1 A 0 {
+				A_GiveInventory("SwigsOfAlcohol", 30);
+				A_TakeInventory("BottlesOfBeer", 1);
+			}
+			goto ready;
+			
+		AltFire.Drink :
+			TNT1 A 0;
+			TNT1 A 0 A_Overlay(2, "AltFire.Drink.Raise");
+			PUDR ABCDE 2;
+			
+		AltFire.DrinkLoop :
+			TNT1 A 0 A_Overlay(2, "AltFire.Drink.Slurp");
+			PUDR FGHIJ 2;
+			PUDR K 2 {
+				A_PlaySound("Fists/Slurp");
+				A_TakeInventory("SwigsOfAlcohol", 5);
+				A_GiveInventory("Ethanol", 5);
+				A_GiveInventory("BasicHeal", 2);
+			}
+			PUDR L 2;
+			TNT1 A 0 A_Refire("AltFire.Check");
+			goto Ready;
+		
+		AltFire.Resume :
+			TNT1 A 0 A_Jump(25, "AltFire.Belch");
+			TNT1 A 0 A_Overlay(2, "Altfire.Resume.Overlay");
+			PUDR EDCBA 2;
+			goto Ready;
+			
+		AltFire.Belch :
+			TNT1 A 0 A_Overlay(2, "Altfire.Resume.Overlay");
+			PUDR EDCB 2;
+			PUDR A 1 A_PlaySound("Fists/Belch");
+			goto ready;
+		
+		//Overlay states
+		
+		Select.Overlay :
+			PUNG A 1 A_Raise;
+			Loop;
+			
+		Deselect.Overlay:
+			PUNG A 1 A_Lower;
+			Loop;
+	
+		Ready.Overlay:
+			PUNG A 1 A_WeaponReady;
+			Loop;
+	
+		Fire.LeftJab.Overlay :
+			PUNG BBCDEFGHIJKLMNOP 1;
+			Goto Ready.Overlay;
+			
+		Fire.RightJab.Overlay :
+			PUNG QRSTUVWXXWVUTSRQ 1;
+			Goto Ready.Overlay;
+			
+		AltFire.ChuckBottle.Overlay :
+			
+			SMSH ABCDEF 2;
+			SMSH GHIJKLM 1;
+			loop;
+			
+		Altfire.Drink.Raise :
+			DRNK ABCDE 2;
+		
+		Altfire.Drink.Slurp :
+			DRNK FGHIJK 2;
+			loop;
+		
+		Altfire.Resume.Overlay :
+			DRNK EDCBA 2;
+			loop;
+		}
+}
+Class BottleProjectile : Rocket
+{
+	Default {
+		Scale 0.2;
+		damage 5;
+		SeeSound "skeleton/swing";
+		DeathSound "fists/SMASH";
+	}
+	states 
+	{
+		Spawn :
+			BEER QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ 1 Bright A_SetSpriteRotation(13);
+			loop;
+		Death :
+			TNT1 A 0 A_SpawnItemEx("ShatterBottle");
+			stop;
+	}
+}

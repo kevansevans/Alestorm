@@ -1,0 +1,4 @@
+Class AleZombieMan : ZombieMan replaces ZombieMan
+{
+
+}

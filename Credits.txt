@@ -1,0 +1,21 @@
+//Unless stated otherwise (not including accidental ommisions)
+//Credits belong to kevansevans or are public domain assets
+//You may use my work, just be sure to give proper credit when due
+
+//Fists
+Sprites borrowed from that one big giant fist sheet found through Google.
+I can't find any credit to who assembled it, would appreciate the info
+
+The animation, however, was done by me in Adobe Animate. The aditions of booze
+bottles were also by me.
+
+//Punch sounds
+https://soundbible.com/991-Left-Hook.html
+https://soundbible.com/992-Right-Cross.html
+
+//Beer bottle sprite
+Art Of Fighting - SNK
+
+The color modifications were done with 256 Generator
+https://forum.zdoom.org/viewtopic.php?f=232&t=63965
+

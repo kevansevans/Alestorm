@@ -1,0 +1,28 @@
+class BasicHeal : Health
+{
+	Default {
+		Inventory.Amount 5;
+		Inventory.MaxAmount 150;
+	}
+}
+
+class BottlesOfBeer : Ammo
+{
+	Default {
+		Inventory.MaxAmount 6;
+	}
+}
+
+class SwigsOfAlcohol : Ammo
+{
+	Default {
+		Inventory.MaxAmount 30;
+	}
+}
+
+class Ethanol : Ammo
+{
+	Default {
+		Inventory.MaxAmount 300;
+	}
+}

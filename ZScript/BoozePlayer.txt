@@ -1,0 +1,86 @@
+class BoozePlayer : PlayerPawn {
+
+	int time;
+	int toDigest;
+	int inSystem;
+	int liverBuffer;
+	
+	bool yawreverse;
+	bool pitchreverse;
+
+	Default {
+		Player.DisplayName "Boozebag";
+		Player.StartItem "FistsBeer";
+		Player.StartItem "SwigsOfAlcohol", 30;
+		DamageFactor 0.3;
+		MeleeRange 64;
+	}
+	override void BeginPlay() {
+		Super.BeginPlay();
+		
+		toDigest = 0;
+		inSystem = 0;
+		liverBuffer = 15;
+		time = 0;
+		
+		yawreverse = false;
+		pitchreverse = false;
+	}
+	override void Tick() {
+		Super.Tick();
+		
+		toDigest += CountInv("Ethanol");
+		A_TakeInventory("Ethanol");
+		
+		float yaw = (0.01 * sin(++time)) * (inSystem / 2);
+		float pitchb = (0.01 * cos(++time)) * (inSystem / 2);
+		
+		if (time / 10 % 30 == 0) {
+			yawreverse = !yawreverse;
+		}
+		if (time / 10 % 15 == 0) {
+			pitchreverse = !pitchreverse;
+		}
+		
+		if (time / 10 % 70 == 0) {
+			yawreverse = !yawreverse;
+			pitchreverse = !pitchreverse;
+		}
+		
+		yaw *= yawreverse == true ? -1 : 1;
+		pitchb *= pitchreverse == true ? -1 : 1;
+			
+		--liverBuffer;
+		if (liverBuffer <= 0) {
+			if (toDigest > 0) {
+				++inSystem;
+				if (inSystem > 200) {
+					toDigest -= 5;
+				} else if (inSystem > 100) {
+					toDigest -= 3;
+				} else if (inSystem > 50) {
+					toDigest -= 2;
+				} else {
+					--toDigest;
+				}
+				
+			} else {
+				inSystem -= 5;
+				if (inSystem < 0) insystem = 0;
+			}
+			
+			liverBuffer = 35 * 2;
+		} 
+		if (inSystem > 0) {
+			A_SetAngle(angle + yaw, SPF_INTERPOLATE);
+			A_SetPitch(pitch + pitchb, SPF_INTERPOLATE | SPF_FORCECLAMP);
+		}
+		if (inSystem > 50) {
+			Vel.x += (yaw / 10);
+			Vel.y += (pitchb / 10);
+		}
+	}
+	states {
+	
+	}
+}

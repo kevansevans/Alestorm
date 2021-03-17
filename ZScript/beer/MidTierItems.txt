@@ -1,0 +1,32 @@
+Class FourBeerBottle : Actor replaces stimpack
+{
+	default
+	{
+	}
+	
+	states 
+	{
+		spawn :
+			TNT1 A 0;
+			TNT1 A 0 A_SpawnItemEx("BeerSpawner", 0, 0, Random(1, 5), Random(-5, 5), Random(-5, 5), 0, Random(-360, 360), SXF_NOCHECKPOSITION);
+			TNT1 A 0 A_SpawnItemEx("BeerSpawner", 0, 0, Random(1, 5), Random(-5, 5), Random(-5, 5), 0, Random(-360, 360), SXF_NOCHECKPOSITION);
+			TNT1 A 0 A_SpawnItemEx("BeerSpawner", 0, 0, Random(1, 5), Random(-5, 5), Random(-5, 5), 0, Random(-360, 360), SXF_NOCHECKPOSITION);
+			TNT1 A 0 A_SpawnItemEx("BeerSpawner", 0, 0, Random(1, 5), Random(-5, 5), Random(-5, 5), 0, Random(-360, 360), SXF_NOCHECKPOSITION);
+			stop;
+	}
+}
+
+Class FourBeerSpawner2 : FourBeerBottle replaces GreenArmor
+{}
+
+Class FourBeerSpawner3 : FourBeerBottle replaces ClipBox
+{}
+
+Class FourBeerSpawner4 : FourBeerBottle replaces ShellBox
+{}
+
+Class FourBeerSpawner5 : FourBeerBottle replaces RocketBox
+{}
+
+Class FourBeerSpawner6 : FourBeerBottle replaces CellPack
+{}

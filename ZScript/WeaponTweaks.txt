@@ -1,0 +1,57 @@
+//Alestorm is intended to not be played with guns.
+//They get replaced with more funstuff
+//I wouldn't recommend removing this file...
+
+class AleRandomitem : Inventory
+{
+	states 
+	{
+		ready :
+			stop;
+	}
+}
+
+class AleFist : AleRandomItem replaces Fist
+{
+
+}
+
+Class AleChainsaw : AleRandomItem replaces Chainsaw
+{
+
+}
+
+Class AleBFG9000 : AleRandomItem replaces BFG9000
+{
+
+}
+
+Class AleChaingun : AleRandomItem replaces Chaingun
+{
+
+}
+
+Class AlePistol : AleRandomItem replaces Pistol
+{
+
+}
+
+Class AlePlasmaRifle : AleRandomItem replaces PlasmaRifle
+{
+
+}
+
+Class AleRocketLauncher : AleRandomItem replaces RocketLauncher
+{
+
+}
+
+Class AleShotgun : AleRandomItem replaces Shotgun
+{
+
+}
+
+Class AleSuperShotgun : AleRandomItem replaces SuperShotgun
+{
+
+}

@@ -1,0 +1,140 @@
+Class FistsSoul : Fist replaces Soulsphere {
+	
+	default
+	{
+		Weapon.SlotNumber 2;
+		radius 3;
+		Inventory.Amount 1;
+		Scale 0.3;
+		Inventory.PickupMessage "When the water tastes like wine, it must be good for you!";
+	}
+	
+	states {
+	
+		spawn :
+		
+			SOUL ABCD 6 Bright;
+			Loop;
+	
+		Select:
+			PUSS A 1 FAST {
+				A_Print("Jesus Water");
+				A_Raise();
+				A_Overlay(2, "Select.Overlay");
+			}
+			Loop;
+			
+		Deselect:
+			PUSS A 1 {
+				A_Lower();
+				A_Overlay(2, "Deselect.Overlay");
+			}
+			Loop;
+			
+		Deselect.Empty:
+			TNT1 A 1 {
+				A_Lower();
+				A_Overlay(2, "Deselect.Overlay");
+			}
+			Loop;
+	
+		Ready:
+			PUSS A 1 {
+				A_WeaponReady();
+				A_Overlay(2, "Ready.Overlay");
+			}
+			Loop;
+	
+		Fire :
+			TNT1 A 0 A_Jump(128, "Fire.RightJab");
+		Fire.LeftJab :
+			PUSS A 1 {
+				A_AlertMonsters();
+				A_Overlay(2, "Fire.LeftJab.Overlay");
+			}
+			PUSS BC 1;
+			PUSS D 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/LPUNCH");
+			PUSS E 1;
+			PUSS F 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/LPUNCH");
+			PUSS G 1;
+			PUSS H 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/LPUNCH");
+			PUSS IJKLMNO 1;
+			PUSS P 1 A_ReFire();
+			goto Ready;
+			
+		Fire.RightJab :
+			PUSS Q 1 {
+				A_AlertMonsters();
+				A_Overlay(2, "Fire.RightJab.Overlay");
+			}
+			PUSS RS 1;
+			PUSS T 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/RPUNCHBO");
+			PUSS U 1;
+			PUSS V 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/RPUNCHBO");
+			PUSS W 1;
+			PUSS X 1 A_CustomPunch(50, true, CPF_NOTURN, "", 0, 0, 0, "", "fists/RPUNCHBO");
+			PUSS XWVUTSR 1;
+			PUSS Q 1 A_ReFire();
+			goto Ready;
+			
+		AltFire :
+			TNT1 A 0 A_Overlay(2, "AltFire.Smash");
+			SMSS ABCDE 2;
+			SMSS FGHIJ 1;
+			TNT1 A 0 {
+				A_PlaySound("fists/SMASH");
+				A_GiveInventory("Soulsphere");
+				A_GiveInventory("Ethanol", 40);
+				A_TakeInventory("FistsSoul");
+			}
+			goto Deselect.Empty;
+		
+		//Overlay states
+		
+		Select.Overlay :
+			PUNG A 1 A_Raise;
+			Loop;
+			
+		Deselect.Overlay :
+			TNT1 A 0 A_JumpIfInventory("FistsSoul", 1, "Deselect.Overlay.NotEmpty");
+			SMSM M 1 A_Lower;
+			Loop;
+			
+		Deselect.Overlay.NotEmpty :
+			PUNG A 1 A_Lower;
+			Loop;
+	
+		Ready.Overlay:
+			PUNG A 1 A_WeaponReady;
+			Loop;
+	
+		Fire.LeftJab.Overlay :
+			PUNG BBCDEFGHIJKLMNOP 1;
+			Goto Ready.Overlay;
+			
+		Fire.RightJab.Overlay :
+			PUNG QRSTUVWXXWVUTSRQ 1;
+			Goto Ready.Overlay;
+			
+		AltFire.Smash :
+			SMSH ABCDE 2;
+			SMSH FGHIJ 1;
+			loop;
+		}
+}
+
+Class FistsMega : Fist replaces Megasphere
+{
+	default
+	{
+		
+	}
+	
+	states {
+	
+		spawn :
+		
+			stop;
+	
+	}
+}
